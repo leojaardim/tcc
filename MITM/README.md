@@ -1,3 +1,6 @@
+Run minikube with calico
+minikube start --network-plugin=cni --cni=calico
+
 Create namespace app
 ```
 kubectl create ns app
@@ -114,5 +117,5 @@ kubectl exec -n app victim-client -- curl -sv https://1.1.1.1 -k
 view traffic 
 
 ```
-stern echoserver
+stern -n tcc echoserver
 ```
