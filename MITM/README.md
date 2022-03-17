@@ -1,8 +1,3 @@
-Run minikube with calico
-```
-minikube start --network-plugin=cni --cni=calico
-```
-
 Create namespace app
 ```
 kubectl create ns app
