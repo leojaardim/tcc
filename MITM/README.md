@@ -23,7 +23,7 @@ Check that we have access to our external victim (here 1.1.1.1)
 
 ```
 # from a node
-minikube ssh
+minikube ssh -p cenarioX
 curl -sv http://1.1.1.1
 curl -sv https://1.1.1.1 -k
 # from the pod
@@ -103,7 +103,7 @@ kubectl get -n tcc svc/mitm-external-lb
 Test if the MITM works
 ```
 # node -> ip
-minikube ssh
+minikube ssh -p cenarioX
 curl -sv http://1.1.1.1
 curl -sv https://1.1.1.1 -k
 # pod -> ip
