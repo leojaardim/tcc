@@ -1,3 +1,29 @@
+---
+##################################################################################################
+# Details HPA
+##################################################################################################
+apiVersion: autoscaling/v2beta2 
+kind: HorizontalPodAutoscaler
+metadata:
+  name: details-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1 
+    kind: Deployment 
+    name: details-v1
+  minReplicas: 1 
+  maxReplicas: 3
+  behavior:
+  scaleDown:
+    stabilizationWindowSeconds: 300
+  metrics: 
+  - type: Resource
+    resource:
+      name: memory 
+      target:
+        type: Utilization 
+        averageValue: 16Mi 
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -42,6 +68,13 @@ spec:
       containers:
       - name: details
         image: docker.io/istio/examples-bookinfo-details-v1:1.16.2
+        resources:
+          requests:
+            memory: "16Mi"
+            cpu: "250m"
+          limits:
+            memory: "26Mi"
+            cpu: "1"
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -315,3 +348,25 @@ spec:
       - name: tmp
         emptyDir: {}
 ---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attacker
+  labels:
+    app: attacker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: attacker
+  template:
+    metadata:
+      labels:
+        app: attacker
+    spec:
+      containers:
+      - name: nginx
+        image: leojaardim/tcc
+        # ports:
+        # - containerPort: 80
