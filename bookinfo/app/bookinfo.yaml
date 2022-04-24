@@ -13,9 +13,6 @@ spec:
     name: details-v1
   minReplicas: 1 
   maxReplicas: 3
-  behavior:
-  scaleDown:
-    stabilizationWindowSeconds: 300
   metrics: 
   - type: Resource
     resource:
