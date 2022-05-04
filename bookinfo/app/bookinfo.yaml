@@ -20,12 +20,6 @@ spec:
       target:
         type: Utilization
         averageUtilization: 75
-    behavior:
-      scaleDown:
-      policies:
-      - type: Percent
-        value: 10
-        periodSeconds: 60
 ---
 apiVersion: v1
 kind: Service
@@ -354,10 +348,16 @@ spec:
 ##################################################################################################
 # Attacker
 ##################################################################################################
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tcc
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: attacker
+  namespace: tcc
   labels:
     app: attacker
 spec:
