@@ -34,9 +34,6 @@ specs:
             - method: GET
               path: "/details/[0-9]*"
       - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
         toPorts:
         - ports:
             - port: "53"
